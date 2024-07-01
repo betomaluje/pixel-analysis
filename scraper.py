@@ -20,27 +20,28 @@ async def scrape_reviews(steam_id):
             title = title_div.text.strip() if title_div else "Unknown Title"
             return reviews, title
 
-async def summarize_reviews(reviews, title, amount_for_summary = 5, characters_per_sentence = 100):
+async def summarize_reviews(reviews, title, prompt = None, amount_for_summary = 5, characters_per_sentence = 100):
     review_type = "videogame"
 
-    prompt = [
-        {
-            "role": "user", 
-            "content": f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}."
-        },
-        {
-            "role": "user",
-            "content": f"Given the next list of reviews for a {review_type} summarize as a bullet point list the top {amount_for_summary} best and worst thing about the game. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item. Here is the input json file:\n"
-        },
-        {
-            "role": "user",
-            "content": f"Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
-        },
-        {
-            "role": "user",
-            "content": f"Text: ###\n{reviews}\n###"
-        }
-    ]
+    if prompt is None:
+        prompt = [
+            {
+                "role": "user", 
+                "content": f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}."
+            },
+            {
+                "role": "user",
+                "content": f"Given the next list of reviews for a {review_type} summarize as a bullet point list the top {amount_for_summary} best and worst thing about the game. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item. Here is the input json file:\n"
+            },
+            {
+                "role": "user",
+                "content": f"Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
+            },
+            {
+                "role": "user",
+                "content": f"Text: ###\n{reviews}\n###"
+            }
+        ]
 
     max_tokens = 300
     timeout = 20.0
