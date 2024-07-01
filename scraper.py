@@ -2,7 +2,7 @@ import json
 import os
 import requests
 from bs4 import BeautifulSoup
-from abilities import llm_prompt
+from openai import AsyncOpenAI
 
 import aiohttp
 import asyncio
@@ -24,14 +24,34 @@ async def summarize_reviews(reviews, title, amount_for_summary = 5, characters_p
     review_type = "videogame"
 
     prompt = (
-        f"You are a helpful, knowledgeable {review_type} assistant that summarizes reviews for this game.\n"
+        f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}.\n"
         f"Given the next list of reviews for a {review_type} summarize as a bullet point list the top {amount_for_summary} best and worst thing about the game. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item. Here is the input json file:\n"
         f"Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
         f"Text: ###\n{reviews}\n###"
     )
 
-    response = llm_prompt(prompt, model="gpt-3.5-turbo", temperature=0.1)
-    return response
+    max_tokens = 300
+    timeout = 20.0
+    temperature = 0.1
+    open_ai_model = "gpt-3.5-turbo-16k"
+
+    client = AsyncOpenAI(
+        # This is the default and can be omitted
+        api_key = os.getenv("GPT_KEY"),
+        timeout = timeout,
+    )    
+
+    completion = await client.chat.completions.create(
+        model = open_ai_model,
+        max_tokens = max_tokens, 
+        messages = prompt,
+        stream = False,
+        temperature = temperature,
+    )    
+    
+    answer = completion.choices[0].message.content.strip()
+    
+    return answer
 
 async def search_by_name(game_name):
     url = f"https://store.steampowered.com/search/suggest?term={game_name}&f=games&cc=US&realm=1&l=english&v=24138598&use_store_query=1&use_search_spellcheck=1&search_creators_and_tags=0"
