@@ -1,0 +1,9 @@
+aiohttp
+beautifulsoup4
+flask-static-compress
+flask==3.0.1
+flask[async]
+gunicorn
+openai[async]
+requests
+werkzeug==3.0.1
