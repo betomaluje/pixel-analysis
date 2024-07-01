@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({ steam_id: steamId }),
         });
         if (response.ok) {
-            const result = await response.json();
-            title.innerHTML = `<a href="https://store.steampowered.com/app/${steamId}" target="_blank">${result.title}</a>`;
+            const result = await response.json();            
+            title.innerHTML = `<a href="https://store.steampowered.com/app/${steamId}" target="_blank">${result.title}</a><span style="font-size: 48px; color: Dodgerblue">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>`;
             if (result.summary) {
                 summary.innerText = result.summary;
             } else {
