@@ -23,12 +23,24 @@ async def scrape_reviews(steam_id):
 async def summarize_reviews(reviews, title, amount_for_summary = 5, characters_per_sentence = 100):
     review_type = "videogame"
 
-    prompt = (
-        f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}.\n"
-        f"Given the next list of reviews for a {review_type} summarize as a bullet point list the top {amount_for_summary} best and worst thing about the game. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item. Here is the input json file:\n"
-        f"Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
-        f"Text: ###\n{reviews}\n###"
-    )
+    prompt = [
+        {
+            "role": "system", 
+            "content": f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}."
+        },
+        {
+            "role": "user",
+            "content": f"Given the next list of reviews for a {review_type} summarize as a bullet point list the top {amount_for_summary} best and worst thing about the game. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item. Here is the input json file:\n"
+        },
+        {
+            "role": "user",
+            "content": f"Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
+        },
+        {
+            "role": "user",
+            "content": f"Text: ###\n{reviews}\n###"
+        }
+    ]
 
     max_tokens = 300
     timeout = 20.0
@@ -45,13 +57,10 @@ async def summarize_reviews(reviews, title, amount_for_summary = 5, characters_p
         model = open_ai_model,
         max_tokens = max_tokens, 
         messages = prompt,
-        stream = False,
         temperature = temperature,
     )    
     
-    answer = completion.choices[0].message.content.strip()
-    
-    return answer
+    return completion.choices[0].message.content
 
 async def search_by_name(game_name):
     url = f"https://store.steampowered.com/search/suggest?term={game_name}&f=games&cc=US&realm=1&l=english&v=24138598&use_store_query=1&use_search_spellcheck=1&search_creators_and_tags=0"
