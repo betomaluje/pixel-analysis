@@ -17,6 +17,11 @@
     margin: 0 auto;
 }
 
+.title-text {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 @media (min-width: 769px) {
     #mobile-menu {
         display: none;
