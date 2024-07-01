@@ -22,6 +22,46 @@
     font-weight: bold;
 }
 
+.modal-content {
+    position: relative;
+    background-color: white;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    font-size: 24px;
+    top: 6px;
+    right: 6px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #af4c4c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background-color: #a33a3a;
+}
+
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
 @media (min-width: 769px) {
     #mobile-menu {
         display: none;
@@ -29,7 +69,6 @@
 
     button[type="submit"] {
         background-color: #4CAF50;
-        /* Green */
         color: white;
         padding: 10px 20px;
         border: none;

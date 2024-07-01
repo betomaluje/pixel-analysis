@@ -22,5 +22,9 @@ def create_app():
         term = request.args.get("term")
         suggestions = await search_by_name(term)
         return {"suggestions": suggestions}
+    
+    @app.route("/subscribe", methods=["GET"])
+    async def subscribe_route():
+        return render_template("payment_modal.html")
 
     return app

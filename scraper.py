@@ -25,7 +25,7 @@ async def summarize_reviews(reviews, title, amount_for_summary = 5, characters_p
 
     prompt = [
         {
-            "role": "system", 
+            "role": "user", 
             "content": f"You are a helpful, knowledgeable {review_type} assistant and journalist, specialized in summarizing reviews for the game {title}."
         },
         {

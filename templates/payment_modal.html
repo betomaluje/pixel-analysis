@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+<div
+  id="payment-modal"
+  class="modal flex items-center justify-center min-h-screen"
+>
+  <div class="modal-content p-6 rounded-lg shadow-lg">
+    <span class="close-button top-2 right-2 cursor-pointer">&times;</span>
+    <h2 class="text-2xl font-bold mb-4">Payment Modal</h2>
+    <p class="mb-4">Payment details go here.</p>
+    <table>
+      <tr>
+        <td>
+          <button class="btn-cancel">Close</button>
+        </td>
+
+        <td>
+          <button class="btn-submit">Subscribe</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="/static/js/payment_modal.js"></script>
+</div>
+{% endblock %}

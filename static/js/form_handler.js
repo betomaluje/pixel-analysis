@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (response.ok) {
             const result = await response.json();            
-            title.innerHTML = `<a href="https://store.steampowered.com/app/${steamId}" target="_blank">${result.title}</a><span style="font-size: 48px; color: Dodgerblue">
+            title.innerHTML = `<a href="https://store.steampowered.com/app/${steamId}" target="_blank">${result.title} <span style="font-size: 48px; color: Dodgerblue">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </span>`;
+          </span></a>`;
             if (result.summary) {
                 summary.innerText = result.summary;
             } else {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         dropdown.innerHTML = '';
         submitButton.disabled = false;
-        submitButton.innerHTML = 'Submit';
+        submitButton.innerHTML = 'Get Report';
     });
 
     let debounceTimeout;
