@@ -1,63 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <base href="/" />
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
-  </head>
-
-  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    {% include 'partials/_header.html' %}
-    <div class="container mx-auto px-4 mt-8 min-h-screen">
-      <div class="text-center py-10">
-        <p>
-          This tool will help you to get a comprehensive summary of the reviews
-          of any Steam game.
-        </p>
-        <p>Search for a videogame and then click on the "Get Report" button.</p>
-        <br />
-        <form id="steam-form">
-          <table>
-            <tr>
-              <td>
-                <label for="game-name" id="game-name-label"
-                  >Enter Game Name:</label
-                >
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="game-name"
-                  name="game_name"
-                  list="game-dropdown"
-                  onchange="change(this)"
-                />
-                <datalist id="game-dropdown" size="3"></datalist>
-              </td>
-              <td>
-                <button type="submit">Get Report</button>
-              </td>
-            </tr>
-            <tr style="display: none">
-              <td>
-                <input type="text" id="steam-id" name="steam_id" required />
-              </td>
-            </tr>
-          </table>
-          <div id="search-results"></div>
-        </form>
-        <div id="title" class="text-3xl title-text mb-4">
-          <a></a>
-          <span style="font-size: 48px; color: Dodgerblue">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </span>
-        </div>
-        <div id="summary" class="text-lg summary-text">
-          The summary of the reviews will be displayed here...
-        </div>
-      </div>
+{% extends "base.html" %} {% block content %}
+<section class="container mx-auto px-4 mt-8 min-h-screen">
+  <div class="text-center py-10">
+    <p>
+      This tool will help you to get a comprehensive summary of the reviews of
+      any Steam game.
+    </p>
+    <p>Search for a videogame and then click on the "Get Report" button.</p>
+    <br />
+    <form id="steam-form">
+      <table>
+        <tr>
+          <td>
+            <label for="game-name" id="game-name-label">Enter Game Name:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              id="game-name"
+              name="game_name"
+              list="game-dropdown"
+              onchange="change(this)"
+            />
+            <datalist id="game-dropdown" size="3"></datalist>
+          </td>
+          <td>
+            <button type="submit">Get Report</button>
+          </td>
+        </tr>
+        <tr style="display: none">
+          <td>
+            <input type="text" id="steam-id" name="steam_id" required />
+          </td>
+        </tr>
+      </table>
+      <div id="search-results"></div>
+    </form>
+    <div id="title" class="text-3xl title-text mb-4">
+      <a></a>
+      <span style="font-size: 48px; color: Dodgerblue">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </span>
     </div>
-    <script src="/static/js/form_handler.js"></script>
-    <script src="/static/js/script.js"></script>
-  </body>
-</html>
+    <div id="summary" class="text-lg summary-text">
+      The summary of the reviews will be displayed here...
+    </div>
+  </div>
+</section>
+{% endblock %}

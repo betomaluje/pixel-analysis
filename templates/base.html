@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pixel Analysis</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://berserkpixel.studio/v2/favicon.png"
+    />
+
+    <base href="/" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+  </head>
+
+  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    {% include 'partials/_header.html' %} {% block content %}{% endblock %}
+    <script src="/static/js/form_handler.js"></script>
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>
