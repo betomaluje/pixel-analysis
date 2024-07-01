@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title.innerText = '';
         summary.innerText = '';
         submitButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading';
+        
         const response = await fetch('/', {
             method: 'POST',
             headers: {
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (response.ok) {
             const result = await response.json();
-            title.innerText = result.title;
+            title.innerHTML = `<a href="https://store.steampowered.com/app/${steamId}" target="_blank">${result.title}</a>`;
             if (result.summary) {
                 summary.innerText = result.summary;
             } else {
