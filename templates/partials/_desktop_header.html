@@ -10,5 +10,7 @@
 </a>
 <div class="ml-auto flex space-x-4 desktop-nav">
   <a class="home-button font-mono text-gray-900 py-2 px-4 rounded-md"></a>
+  {% if not paid_user %}
   <a href="/subscribe">Subscribe!</a>
+  {% endif %}
 </div>

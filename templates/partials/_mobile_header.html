@@ -23,6 +23,8 @@
 <div id="mobile-menu">
   <dl>
     <dt><a href="/">Home</a></dt>
-    <dt><a href="/subscribe">Subscribe!</a></dt>
+    <dt>
+      {% if not paid_user %}<a href="/subscribe">Subscribe!</a>{% endif %}
+    </dt>
   </dl>
 </div>

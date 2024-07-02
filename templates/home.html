@@ -58,11 +58,13 @@
         </tr>
       </table>
     </form>
+    {% if paid_user %}
     <!-- Custom Prompt for paid users -->
     <div>
       <p>Custom Prompt:</p>
       <textarea cols="50" rows="5" id="prompt" name="prompt"></textarea>
     </div>
+    {% endif %}
     <div id="title" class="text-3xl title-text mb-4"></div>
     <div id="summary" class="text-lg summary-text">
       The summary of the reviews will be displayed here...

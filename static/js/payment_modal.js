@@ -6,6 +6,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeButton.addEventListener('click',(event) => closeModal(event));
     cancelButton.addEventListener('click', (event) => closeModal(event));
+
+    submitButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        submitButton.disabled = true;
+
+        const response = await fetch('/payment-success', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({payment: true}),
+        });
+
+        if (response.ok) {
+            console.log('Payment successful');
+            window.location.href = "/";
+        }
+
+        submitButton.disabled = false;
+    });
     
 });
 
