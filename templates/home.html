@@ -14,12 +14,7 @@
             <label for="game-name" id="game-name-label">Enter Game Name:</label>
           </td>
           <td>
-            <input
-              type="text"
-              id="game-name"
-              name="game_name"
-              onchange="change(this)"
-            />
+            <input type="text" id="game-name" name="game_name" />
 
             <script type="text/javascript">
               $("#game-name").autocomplete({
@@ -27,7 +22,7 @@
                   $.getJSON(
                     "{{url_for('search_route')}}",
                     {
-                      term: request.term, // in flask, "term" will be the argument to look for using request.args
+                      term: request.term,
                     },
                     function (data) {
                       // we map according to the dictionary we get from Flask
@@ -47,7 +42,7 @@
                 },
                 minLength: 2,
                 select: function (event, ui) {
-                  console.log(ui.item.value); // not in your question, but might help later
+                  $("#steam-id").val(ui.item.value);
                 },
               });
             </script>
@@ -63,12 +58,12 @@
         </tr>
       </table>
     </form>
-    <div id="title" class="text-3xl title-text mb-4">
-      <a></a>
-      <span style="font-size: 48px; color: Dodgerblue">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </span>
+    <!-- Custom Prompt for paid users -->
+    <div>
+      <p>Custom Prompt:</p>
+      <textarea cols="50" rows="5" id="prompt" name="prompt"></textarea>
     </div>
+    <div id="title" class="text-3xl title-text mb-4"></div>
     <div id="summary" class="text-lg summary-text">
       The summary of the reviews will be displayed here...
     </div>

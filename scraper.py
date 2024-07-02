@@ -53,13 +53,13 @@ async def scrape_reviews(steam_id):
 
             return reviews, title
 
-async def summarize_reviews(reviews, title, prompt = None, amount_for_summary = 5, characters_per_sentence = 100):
+async def summarize_reviews(reviews, title, custom_prompt = None, amount_for_summary = 5, characters_per_sentence = 100):
     if reviews is None:
         return None
     
     review_type = "videogame"
 
-    if prompt is None:
+    if custom_prompt is None:
         prompt = [
             {
                 "role": "user", 
@@ -76,6 +76,17 @@ async def summarize_reviews(reviews, title, prompt = None, amount_for_summary = 
             {
                 "role": "user",
                 "content": f"Text: ###\n{reviews}\n###"
+            }
+        ]
+    else:
+        prompt = [
+            {
+                "role": "user",
+                "content": f"###\n{custom_prompt}\n###"
+            },
+            {
+                "role": "user",
+                "content": f"Use this {review_type} title name: {title} as a reference for your answer."
             }
         ]
 

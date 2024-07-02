@@ -13,8 +13,9 @@ def create_app():
     async def home_route():
         if request.method == "POST":
             steam_id = request.json.get("steam_id")
+            custom_prompt = request.json.get("prompt")
             reviews, title = await scrape_reviews(steam_id)
-            summary = await summarize_reviews(reviews, title)
+            summary = await summarize_reviews(reviews, title, custom_prompt)
             return {"title": title, "summary": summary}
         return render_template("home.html")
 
