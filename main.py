@@ -1,8 +1,7 @@
 import logging
-from flask import Flask, render_template
 from gunicorn.app.base import BaseApplication
-
 from routes import create_app
+
 app = create_app()
 
 # Setup logging
@@ -25,7 +24,6 @@ class StandaloneApplication(BaseApplication):
         return self.application
 
 if __name__ == "__main__":
-    import asyncio
     options = {
         "bind": "0.0.0.0:8080",
         "workers": 4,

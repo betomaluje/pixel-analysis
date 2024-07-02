@@ -18,10 +18,39 @@
               type="text"
               id="game-name"
               name="game_name"
-              list="game-dropdown"
               onchange="change(this)"
             />
-            <datalist id="game-dropdown" size="3"></datalist>
+
+            <script type="text/javascript">
+              $("#game-name").autocomplete({
+                source: function (request, response) {
+                  $.getJSON(
+                    "{{url_for('search_route')}}",
+                    {
+                      term: request.term, // in flask, "term" will be the argument to look for using request.args
+                    },
+                    function (data) {
+                      // we map according to the dictionary we get from Flask
+                      var autocompleteData = $.map(
+                        data.matching_results,
+                        function (v, i) {
+                          return {
+                            label: v.name,
+                            value: v.id,
+                          };
+                        }
+                      );
+
+                      response(autocompleteData);
+                    }
+                  );
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                  console.log(ui.item.value); // not in your question, but might help later
+                },
+              });
+            </script>
           </td>
           <td>
             <button type="submit">Get Report</button>
@@ -33,7 +62,6 @@
           </td>
         </tr>
       </table>
-      <div id="search-results"></div>
     </form>
     <div id="title" class="text-3xl title-text mb-4">
       <a></a>

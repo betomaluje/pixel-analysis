@@ -2,6 +2,7 @@ from flask import request
 from flask import render_template
 from flask import current_app as app
 from flask import Flask
+from flask import jsonify
 from scraper import scrape_reviews, summarize_reviews, search_by_name
 
 def create_app():
@@ -21,7 +22,7 @@ def create_app():
     async def search_route():
         term = request.args.get("term")
         suggestions = await search_by_name(term)
-        return {"suggestions": suggestions}
+        return jsonify(matching_results=suggestions)
     
     @app.route("/subscribe", methods=["GET"])
     async def subscribe_route():

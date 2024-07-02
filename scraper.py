@@ -4,17 +4,19 @@ from bs4 import BeautifulSoup
 from openai import AsyncOpenAI
 
 async def search_by_name(game_name):
+    if not game_name:
+        return []
+    
     url = f"https://store.steampowered.com/search/suggest?term={game_name}&f=games&cc=US&realm=1&l=english&v=24138598&use_store_query=1&use_search_spellcheck=1&search_creators_and_tags=0"
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            suggestions = None
+            suggestions = []
 
             try:
                 text = await response.text()
                 soup = BeautifulSoup(text, 'html.parser')
 
-                if soup.find('a', class_='match'):
-                    suggestions = []
+                if soup.find('a', class_='match'):                    
                     for result in soup.find_all('a', class_='match'):                    
                         suggestion = {}
                         suggestion["name"] = result.find('div', class_='match_name').text.replace("\'","").strip()
