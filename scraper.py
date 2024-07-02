@@ -1,26 +1,60 @@
-import json
+import aiohttp
 import os
-import requests
 from bs4 import BeautifulSoup
 from openai import AsyncOpenAI
 
-import aiohttp
-import asyncio
+async def search_by_name(game_name):
+    url = f"https://store.steampowered.com/search/suggest?term={game_name}&f=games&cc=US&realm=1&l=english&v=24138598&use_store_query=1&use_search_spellcheck=1&search_creators_and_tags=0"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            suggestions = None
+
+            try:
+                text = await response.text()
+                soup = BeautifulSoup(text, 'html.parser')
+
+                if soup.find('a', class_='match'):
+                    suggestions = []
+                    for result in soup.find_all('a', class_='match'):                    
+                        suggestion = {}
+                        suggestion["name"] = result.find('div', class_='match_name').text.replace("\'","").strip()
+                        suggestion["id"] = result["data-ds-appid"]
+                        suggestions.append(suggestion)
+
+            except Exception as e:
+                print(e)
+
+            return suggestions
 
 async def scrape_reviews(steam_id):
     url = f"https://steamcommunity.com/app/{steam_id}/reviews/?browsefilter=toprated&snr=1_5_100010_"
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            text = await response.text()
-            soup = BeautifulSoup(text, 'html.parser')
-            reviews = []
-            for review in soup.find_all('div', class_='div.apphub_CardTextContent'):
-                reviews.append(review.text)
-            title_div = soup.find('div', class_='apphub_AppName')
-            title = title_div.text.strip() if title_div else "Unknown Title"
+            reviews = None
+            title = ""
+
+            try:
+                text = await response.text()
+                soup = BeautifulSoup(text, 'html.parser')
+
+                if soup.find('div', class_='apphub_CardTextContent'):
+                    reviews = []
+                    for review in soup.find_all('div', class_='div.apphub_CardTextContent'):
+                        reviews.append(review.text)
+
+                if soup.find('div', class_='apphub_AppName'):
+                    title_div = soup.find('div', class_='apphub_AppName')
+                    title = title_div.text.strip() if title_div else "Unknown Title"
+
+            except Exception as e:
+                print(e)
+
             return reviews, title
 
 async def summarize_reviews(reviews, title, prompt = None, amount_for_summary = 5, characters_per_sentence = 100):
+    if reviews is None:
+        return None
+    
     review_type = "videogame"
 
     if prompt is None:
@@ -62,17 +96,3 @@ async def summarize_reviews(reviews, title, prompt = None, amount_for_summary = 
     )    
     
     return completion.choices[0].message.content
-
-async def search_by_name(game_name):
-    url = f"https://store.steampowered.com/search/suggest?term={game_name}&f=games&cc=US&realm=1&l=english&v=24138598&use_store_query=1&use_search_spellcheck=1&search_creators_and_tags=0"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            text = await response.text()
-            soup = BeautifulSoup(text, 'html.parser')
-            suggestions = []
-            for result in soup.find_all('a', class_='match'):
-                suggestion = {}
-                suggestion["name"] = result.find('div', class_='match_name').text.replace("\'","").strip()
-                suggestion["id"] = result["data-ds-appid"]
-                suggestions.append(suggestion)
-            return suggestions

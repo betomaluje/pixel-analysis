@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.summary) {
                 summary.innerText = result.summary;
             } else {
-                summary.innerText = "Error fetching summary. Please try again.";
+                summary.innerText = `There is no reviews for ${result.title}. Please try another game.`;
             }
         }
         dropdown.innerHTML = '';
