@@ -7,3 +7,10 @@ gunicorn
 openai
 requests
 werkzeug==3.0.1
+wtforms
+flask-bootstrap
+flask-wtf
+pymongo
+waitress
+python-dotenv
+email_validator

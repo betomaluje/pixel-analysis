@@ -1,8 +1,94 @@
 @import url("https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/base.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css");
+/* mobile */
 @media (max-width: 768px) {
+    .container {
+        display: contents;
+        margin: 8px;
+        padding: 8px;
+    }
+
+    .summary-text {
+        text-align: left;
+        text-justify: inter-word;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #custom-prompt {
+        text-align: left;
+        text-justify: inter-word;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #custom-prompt textarea {
+        width: 90%;
+        margin: 0 auto;
+    }
+
     #mobile-menu {
         display: block;
+    }
+
+    .nav-container {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .nav-container .logo {
+        font-size: 1.2rem;
+    }
+
+    .nav--ul__one,
+    .nav--ul__two {
+        flex-direction: column;
+        gap: .6rem;
+        margin-left: 0;
+    }
+
+    .hamburger-menu {
+        display: block;
+
+        z-index: 10;
+        cursor: pointer;
+    }
+
+    .nav {
+        position: absolute;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        width: 90%;
+        display: block;
+
+        padding-top: 6rem;
+
+        align-items: center;
+        text-align: center;
+        background-color: #4D4DDB;
+        color: white;
+
+        transition: 0.15s ease-in-out;
+    }
+
+    .nav.active {
+        right: 0;
+        color: white;
+    }
+
+    .icon-white {
+        -webkit-filter: contrast(4) invert(1);
+        -moz-filter: contrast(4) invert(1);
+        -o-filter: contrast(4) invert(1);
+        -ms-filter: contrast(4) invert(1);
+        filter: contrast(4) invert(1);
+    }
+
+    .mobile-title {
+        display: flex;
+        margin-left: 0;
+        margin-right: auto;
     }
 
     .desktop-nav {
@@ -10,11 +96,8 @@
     }
 }
 
-.summary-text {
-    text-align: left;
-    text-justify: inter-word;
-    width: 50%;
-    margin: 0 auto;
+ul {
+    list-style: none;
 }
 
 .title-text {
@@ -58,13 +141,81 @@
     cursor: pointer;
 }
 
+.paid-status p {
+    font-size: 20px;
+    font-weight: 700;
+}
+
 .btn-submit:hover {
     background: #45a049;
 }
 
+.notification {
+    background-color: #4CAF50;
+    color: white;
+    position: relative;
+    margin: auto;
+    width: 50%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 0px 6px 6px;
+    cursor: pointer;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav-container .logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.nav {
+    display: flex;
+}
+
+.nav--ul__one {    
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-container,
+.nav--ul__one,
+.nav--ul__two {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 1.2rem;
+}
+
+.hamburger-menu {
+    display: none;
+    /* Hidden by default for larger screens */
+    cursor: pointer;
+}
+
+/* desktop */
 @media (min-width: 769px) {
-    #mobile-menu {
-        display: none;
+    .summary-text {
+        text-align: left;
+        text-justify: inter-word;
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    header {
+        background: white;
+        color: black;
+
+        padding: .5rem 0;
     }
 
     button[type="submit"] {

@@ -9,7 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const steamId = steamIdInput.value;
-        const promptInput = prompt.value;
+        var promptInput = '';
+
+        if (prompt && prompt.value) {
+            promptInput = prompt.value
+        }
         
         title.innerText = '';
         summary.innerText = '';

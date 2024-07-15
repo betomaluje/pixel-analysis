@@ -15,17 +15,41 @@
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
 
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
     <script src="/static/js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.3/themes/smoothness/jquery-ui.css">
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.3/themes/smoothness/jquery-ui.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js"></script>
   </head>
 
   <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    {% include 'partials/_header.html' %}
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div id="notifications" class="notification">
+      {% for message in messages %} {{ message }} {% endfor %}
+    </div>
+    {% endif %} {% endwith %} {% include 'partials/_header.html' %}
     <main class="container mx-auto px-4 mt-8 min-h-screen">
       {% block content %}{% endblock %}
     </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var notifications = document.getElementById("notifications");
+
+        if (notifications !== null) {
+          notifications.addEventListener("click", function () {
+            notifications.style.display = "none";
+          });
+        }
+      });
+    </script>
   </body>
 </html>

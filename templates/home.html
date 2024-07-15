@@ -58,9 +58,9 @@
         </tr>
       </table>
     </form>
-    {% if paid_user %}
+    {% if session['paid_user'] %}
     <!-- Custom Prompt for paid users -->
-    <div>
+    <div id="custom-prompt">
       <p>Custom Prompt:</p>
       <textarea cols="50" rows="5" id="prompt" name="prompt"></textarea>
     </div>

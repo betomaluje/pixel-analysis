@@ -1,0 +1,51 @@
+{% extends 'bootstrap/base.html' %} {% import 'bootstrap/wtf.html' as wtf %} {%
+block title %} Account {% endblock %} {% block styles %} {{super()}}
+<link rel="stylesheet" href="/static/css/form-styles.css" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+/>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h1 class="card-title text-center mb-4">Account</h1>
+          <p class="paid-status">
+            {% if not session['paid_user'] %} <b>Free User</b>
+            <a href="{{ url_for('subscribe_route') }}">
+              <span class="material-symbols-outlined"> trending_flat </span>
+              Become a member!</a
+            >{% else %}
+            <b>Paid User</b>
+            <span class="material-symbols-outlined"> paid </span> {% endif %}
+          </p>
+          {{ wtf.quick_form(form, novalidate=True) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    var oldPassword = document.getElementById("oldPassword");
+    oldPassword.type = "password";
+    oldPassword.addEventListener("click", () => {
+      if (oldPassword.type == "text") {
+        oldPassword.type = "password";
+      } else {
+        oldPassword.type = "text";
+      }
+    });
+
+    var showPasswordCheckbox = document.getElementById("showPassword");
+    showPasswordCheckbox.addEventListener("change", () => {
+      var password1 = document.getElementById("password");
+      var password2 = document.getElementById("password2");
+      password1.type = showPasswordCheckbox.checked ? "text" : "password";
+      password2.type = showPasswordCheckbox.checked ? "text" : "password";
+    });
+  });
+</script>
+{% endblock %}
