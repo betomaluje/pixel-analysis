@@ -22,13 +22,11 @@ def create_app():
     if MONGO_URI:
         try:
             mongo_client = MongoClient(MONGO_URI)
-            users_collection = mongo_client['PixelAnalysis']['Users']  # Specify a default database name
-            print("MongoDB connected successfully.")
+            users_collection = mongo_client['PixelAnalysis']['Users']
         except Exception as e:
             print(f"Error connecting to MongoDB: {str(e)}")
             users_collection = None
     else:
-        print("Warning: MONGO_URI environment variable is not set.")
         users_collection = None
 
     def is_key_session(key):        
@@ -50,13 +48,9 @@ def create_app():
             summary = await summarize_reviews(reviews, title, custom_prompt, amount_for_summary)
             return {"title": title, "summary": summary}
         
-        #{'_id': ObjectId('668f8faf8196938ef0c796db'), 'username': 'beto', 'password': 'Test1234!', 'email': 'beto@beto.com', 'paid_user': False}
-        
         loggedin = is_key_session('username')
         if loggedin:
             update_user_session(session['username'])
-
-        print(session)
 
         return render_template("home.html", loggedin=loggedin)
 
@@ -136,23 +130,18 @@ def create_app():
                 form.populate(user)                
         
         elif request.method == 'POST':
-            if form.logout.data:
-                print("Logout user")                
+            if form.logout.data:              
                 session.clear()
                 flash('Successfuly logged out')
                 return redirect(url_for('home_route'))
             elif form.delete.data:
-                print("Deleting user")
 
                 if (users_collection is not None):
                     users_collection.delete_one({'username': user['username']})
-                    print("User deleted from MongoDB")
                     flash('Successfuly deleted your account')
                     return redirect(url_for('home_route'))
 
             elif form.update.data:
-                print("Update user")
-
                 oldPassword = user['password']
                 oldEmail = user['email']
                 
@@ -161,7 +150,6 @@ def create_app():
                 # Update MongoDB
                 if users_collection is not None:
                     if new_password:
-                        # print(f"Updating email and password {oldEmail} -> {new_email} / {oldPassword} -> {new_password}")
                         myquery = {"email": oldEmail, "password": oldPassword}
                         newvalues = { "$set": { "email": new_email, 'password': new_password } }
                         users_collection.update_one(
@@ -170,7 +158,6 @@ def create_app():
                             upsert=True
                         )
                     else:
-                        # print(f"Updating email only {oldEmail} -> {new_email}")
                         myquery = {"email": oldEmail}
                         newvalues = { "$set": { "email": new_email } }
                         users_collection.update_one(
@@ -178,7 +165,6 @@ def create_app():
                             newvalues,
                             upsert=True
                         )
-                    print("User updated in MongoDB")
                 
                 flash('Your changes have been saved.')
                 return redirect(url_for('home_route'))
