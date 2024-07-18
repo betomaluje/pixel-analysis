@@ -60,16 +60,119 @@
     </form>
     {% if session['paid_user'] %}
     <!-- Custom Prompt for paid users -->
-    <div id="custom-prompt">
+    <div class="custom-prompt">
       <p>Custom Prompt:</p>
       <textarea cols="50" rows="5" id="prompt" name="prompt"></textarea>
     </div>
     {% endif %}
     <div id="title" class="text-3xl title-text mb-4"></div>
+
+    <div id="game-details" class="game-details">
+      <a class="modal-button" onclick="showImages()">See images (click here)</a>
+      <dialog id="dialog">
+        <a id="closeDialog" class="modal-button" onclick="hideImages()"
+          >Close</a
+        >
+        <h2>Header Capsule</h2>
+        <div
+          id="capsule_header"
+          title="460 x 215 pixels. Appears at the top of the store page."
+        >
+          <img src="" />
+        </div>
+        <h2>Small Capsule</h2>
+        <div
+          id="capsule_small"
+          title="231 x 87 pixels. Used for various lists throughout Steam."
+        >
+          <img src="" />
+        </div>
+        <h2>Main Capsule</h2>
+        <div
+          id="capsule_main"
+          title="616 x 353 pixels. Appears at the top of the Steam store home page in the Main Capsule carousel"
+        >
+          <img src="" />
+        </div>
+        {% if session['paid_user'] %}
+        <h2>Vertical Capsule</h2>
+        <div
+          id="capsule_vertical"
+          title="374 x 448 pixels. Can appear at the top of the front page during seasonal sales, and on other new sale pages."
+        >
+          <img src="" />
+        </div>
+        <h2>Page Background</h2>
+        <div
+          id="page_background"
+          title="1438 x 810 pixels. May be used in the background of your store page."
+        >
+          <img src="" />
+        </div>
+        <h2>Library Capsule</h2>
+        <div
+          id="library_capsule"
+          title="600 x 900 pixels. Primarily used in the library overview and collection views."
+        >
+          <img src="" />
+        </div>
+        <h2>Library Hero</h2>
+        <div
+          id="library_hero"
+          title="3840 x 1240 pixels. Appears at the top of a user’s library details page for this product."
+        >
+          <img src="" />
+        </div>
+        <h2>Library Logo</h2>
+        <div
+          id="library_logo"
+          title="1280 x 720 pixels. Appears at the top of a user's library details page for this product, placed on top of the hero graphic."
+        >
+          <img src="" />
+        </div>
+        {% endif %}
+      </dialog>
+    </div>
     <div id="summary" class="text-lg summary-text">
       The summary of the reviews will be displayed here...
     </div>
+    <div class="pricing flex">
+      <div class="flex_content flex2">
+        <h2>Indie</h2>
+        <h4>Free</h4>
+        <span>Use Pixel Analitics for free</span>
+        <ul>
+          <li>Limited report content</li>
+          <li>No custom prompt</li>
+          <li>
+            See <i>limited amount</i> of the images that each game uses on Steam
+          </li>
+        </ul>
+      </div>
+      <div class="flex_content">
+        <h2>Pro</h2>
+        <h4>$19 / month</h4>
+        <span>Use Pixel Analitics with <b>no limits!</b></span>
+        <ul>
+          <li>10 item bullet points</li>
+          <li>Use Custom Prompts if you want</li>
+          <li>
+            See <b>ALL</b> images that the games use on Steam (library capsule,
+            main capsule, library hero, etc)
+          </li>
+        </ul>
+        <button type="button" onclick='{{ url_for("subscribe_route") }}'>
+          Try it!
+        </button>
+      </div>
+    </div>
   </div>
+  <footer class="footer">
+    © 2024
+    <a href="https://berserkpixel.studio/" target="_blank"
+      >Berserk Pixel Game Studios</a
+    >. All rights reserved.
+  </footer>
   <script src="/static/js/form_handler.js"></script>
 </section>
 {% endblock %}
