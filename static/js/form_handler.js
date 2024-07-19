@@ -9,7 +9,19 @@ $(document).ready(function(){
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const steamId = steamIdInput.value;        
+        const steamId = steamIdInput.value;
+
+        const input = document.getElementById("game-name").value;
+
+        if ((input == null || input == "") || !input.trim().length) {
+            Swal.fire({
+                title: 'Oops...',
+                html: 'You need to enter a Steam game id or search by name first.',
+                icon: "error",
+            });
+            return;
+        }
+
         var promptInput = '';
 
         if (prompt && prompt.value) {
@@ -22,6 +34,16 @@ $(document).ready(function(){
 
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading';
+
+        Swal.fire({
+            title: 'Loading...',
+            html: 'Fetching reviews from Steam and then preparing the analysis.\nDepending on the popularity of the game it might take up to a couple of minutes.\nPlease wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
         
         const response = await fetch('/', {
             method: 'POST',
@@ -40,11 +62,13 @@ $(document).ready(function(){
             showDetails();
 
             if (result.summary) {
-                summary.innerText = result.summary;
+                summary.innerText = `Went through more than ${result.reviews_taken} reviews and got the following summary:\n\n${result.summary}`;
             } else {
                 summary.innerText = `There is no reviews for ${result.title}. Please try another game.`;
             }
         }
+
+        Swal.close();
 
         submitButton.disabled = false;
         submitButton.innerHTML = 'Get Report';

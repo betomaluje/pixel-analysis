@@ -22,7 +22,7 @@ async def home_route():
         amount_for_summary = 10 if is_key_session('paid_user') else 3
         amount_reviews_to_search = 40 if is_key_session('paid_user') else 10
         
-        summary = await summarize_reviews(
+        (reviews_taken, summary) = await summarize_reviews(
             steam_id=steam_id, 
             title=title, 
             to_search=amount_reviews_to_search, 
@@ -30,7 +30,7 @@ async def home_route():
             amount_for_summary=amount_for_summary
         )
 
-        return {"title": title, "summary": summary}        
+        return {"title": title, "summary": summary, "reviews_taken": reviews_taken}        
     loggedin = is_key_session('username')
     if loggedin:
         update_user_session(session['username'])
