@@ -43,6 +43,7 @@
                 minLength: 2,
                 select: function (event, ui) {
                   $("#steam-id").val(ui.item.value);
+                  $("#title").val(ui.item.label);
                 },
               });
             </script>
@@ -66,8 +67,14 @@
     </div>
     {% endif %}
     <div id="title" class="text-3xl title-text mb-4"></div>
-
+    <div id="summary" class="text-lg summary-text">
+      The summary of the reviews will be displayed here...
+    </div>
+    <br /><br />
     <div id="game-details" class="game-details">
+      <p>
+        <span class="text-2xl mb-4">More information about the game</span>
+      </p>
       <a class="modal-button" onclick="showImages()">See images (click here)</a>
       <dialog id="dialog">
         <a id="closeDialog" class="modal-button" onclick="hideImages()"
@@ -132,10 +139,15 @@
         </div>
         {% endif %}
       </dialog>
+      <iframe
+        id="game-chart"
+        src="https://steamdb.info/embed/?appid=1145350"
+        height="389"
+        style="border: 0; overflow: hidden; width: 100%"
+        loading="lazy"
+      ></iframe>
     </div>
-    <div id="summary" class="text-lg summary-text">
-      The summary of the reviews will be displayed here...
-    </div>
+    {% if not session['paid_user'] %}
     <div class="pricing flex">
       <div class="flex_content flex2">
         <h2>Indie</h2>
@@ -166,6 +178,7 @@
         </button>
       </div>
     </div>
+    {% endif %}
   </div>
   <footer class="footer">
     © 2024

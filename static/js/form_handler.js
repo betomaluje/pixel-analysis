@@ -2,12 +2,10 @@ $(document).ready(function(){
     const form = document.getElementById('steam-form');
     const submitButton = form.querySelector('button[type="submit"]');
     const steamIdInput = document.getElementById('steam-id');
-    const title = document.getElementById('title');
     const summary = document.getElementById('summary');
     const prompt = document.getElementById('prompt');
-    const gameDetails = document.getElementById('game-details');
 
-    gameDetails.style.display = 'none';
+    hideDetails();
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -18,10 +16,9 @@ $(document).ready(function(){
             promptInput = prompt.value
         }
         
-        title.innerText = '';
         summary.innerText = '';
 
-        gameDetails.style.display = 'none';
+        hideDetails();
 
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading';
@@ -29,15 +26,18 @@ $(document).ready(function(){
         const response = await fetch('/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify({ steam_id: steamId, prompt: promptInput }),
+            body: JSON.stringify({ steam_id: steamId, prompt: promptInput, title: title.value }),
         });
 
         if (response.ok) {
             const result = await response.json();
 
+            const chart = document.getElementById('game-chart');
+            chart.src = "https://steamdb.info/embed/?appid=" + steamId;
+
             populateAll(steamId, result.title);
 
-            gameDetails.style.display = 'block';
+            showDetails();
 
             if (result.summary) {
                 summary.innerText = result.summary;
@@ -50,6 +50,26 @@ $(document).ready(function(){
         submitButton.innerHTML = 'Get Report';
     });    
 });
+
+function hideDetails() {
+    const title = document.getElementById('title');
+    const gameDetails = document.getElementById('game-details');
+    const chart = document.getElementById('game-chart');
+
+    gameDetails.style.display = 'none';
+    chart.style.display = 'none';
+    title.style.display = 'none';
+}
+
+function showDetails() {
+    const title = document.getElementById('title');
+    const gameDetails = document.getElementById('game-details');
+    const chart = document.getElementById('game-chart');
+
+    gameDetails.style.display = 'block';
+    chart.style.display = 'block';
+    title.style.display = 'block';
+}
 
 function showImages() {
     document.getElementById("dialog").showModal();

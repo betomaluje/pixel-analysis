@@ -1,5 +1,5 @@
 from flask import request, render_template, make_response, jsonify, redirect, url_for, flash, session
-from scraper import scrape_reviews, summarize_reviews, search_by_name
+from scraper import summarize_reviews, search_by_name
 from forms import LoginForm, AccountForm, RegistrationForm
 from main import app, users_collection
 
@@ -17,9 +17,19 @@ async def home_route():
     if request.method == "POST":
         steam_id = request.json.get("steam_id")
         custom_prompt = request.json.get("prompt")
+        title = request.json.get("title")
+
         amount_for_summary = 10 if is_key_session('paid_user') else 3
-        reviews, title = await scrape_reviews(steam_id)
-        summary = await summarize_reviews(reviews, title, custom_prompt, amount_for_summary)
+        amount_reviews_to_search = 40 if is_key_session('paid_user') else 10
+        
+        summary = await summarize_reviews(
+            steam_id=steam_id, 
+            title=title, 
+            to_search=amount_reviews_to_search, 
+            custom_prompt=custom_prompt, 
+            amount_for_summary=amount_for_summary
+        )
+
         return {"title": title, "summary": summary}        
     loggedin = is_key_session('username')
     if loggedin:
@@ -30,8 +40,7 @@ async def home_route():
 async def search_route():
     term = request.args.get("term")
     suggestions = await search_by_name(term)
-    return jsonify(matching_results=suggestions)    
-
+    return jsonify(matching_results=suggestions)
 
 @app.route("/subscribe", methods=["GET"])
 async def subscribe_route():
