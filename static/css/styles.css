@@ -1,115 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/base.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css");
-/* mobile */
-@media (max-width: 768px) {
-    .container {
-        display: contents;
-        margin: 8px;
-        padding: 8px;
-    }
-
-    .summary-text {
-        text-align: left;
-        text-justify: inter-word;
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    .custom-prompt {
-        text-align: left;
-        text-justify: inter-word;
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    #mobile-menu {
-        display: block;
-    }
-
-    .nav-container {
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
-
-    .nav-container .logo {
-        font-size: 1.2rem;
-    }
-
-    .nav--ul__one,
-    .nav--ul__two {
-        flex-direction: column;
-        gap: .6rem;
-        margin-left: 0;
-    }
-
-    .hamburger-menu {
-        display: block;
-
-        z-index: 10;
-        cursor: pointer;
-    }
-
-    .nav {
-        position: absolute;
-        top: 0;
-        right: -100%;
-        bottom: 0;
-        width: 90%;
-        display: block;
-
-        padding-top: 6rem;
-
-        align-items: center;
-        text-align: center;
-        background-color: #4D4DDB;
-        color: white;
-
-        transition: 0.15s ease-in-out;
-    }
-
-    .nav.active {
-        right: 0;
-        color: white;
-    }
-
-    .icon-white {
-        -webkit-filter: contrast(4) invert(1);
-        -moz-filter: contrast(4) invert(1);
-        -o-filter: contrast(4) invert(1);
-        -ms-filter: contrast(4) invert(1);
-        filter: contrast(4) invert(1);
-    }
-
-    .mobile-title {
-        display: flex;
-        margin-left: 0;
-        margin-right: auto;
-    }
-
-    .desktop-nav {
-        display: none;
-    }
-
-    #dialog {    
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-        width: 80%;
-        height: 90%;
-        max-height: 90%;
-        padding: 8px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -30%);
-    }
-
-    .flex {
-        flex-direction: column;
-    }
-    .flex2 {
-        border: none;
-    }
-}
 
 ul {
     list-style: none;
@@ -181,20 +71,6 @@ ul {
     font-size: 16px;
 }
 
-.notification {
-    background-color: #4CAF50;
-    color: white;
-    position: relative;
-    margin: auto;
-    width: 50%;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0px 0px 6px 6px;
-    cursor: pointer;
-}
-
 .nav-container {
     display: flex;
     align-items: center;
@@ -234,12 +110,6 @@ ul {
 
 .footer a {
     text-decoration: underline;
-}
-
-.hamburger-menu {
-    display: none;
-    /* Hidden by default for larger screens */
-    cursor: pointer;
 }
 
 .modal-button {
@@ -325,45 +195,4 @@ dialog {
 
 .flex_content button:hover {
     background: #45a049;
-}
-
-/* desktop */
-@media (min-width: 769px) {
-    .summary-text {
-        text-align: left;
-        text-justify: inter-word;
-        width: 50%;
-        margin: 0 auto;
-    }
-
-    header {
-        background: white;
-        color: black;
-
-        padding: .5rem 0;
-    }
-
-    button[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    button[type="submit"]:hover {
-        background-color: #45a049;
-    }
-
-    .desktop-nav {
-        display: flex;
-    }
-
-    #dialog {    
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-        width: 60%;
-        padding: 16px;
-    }
 }

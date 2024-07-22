@@ -14,11 +14,21 @@ $(document).ready(function(){
         const input = document.getElementById("game-name").value;
 
         if ((input == null || input == "") || !input.trim().length) {
-            Swal.fire({
-                title: 'Oops...',
-                html: 'You need to enter a Steam game id or search by name first.',
-                icon: "error",
-            });
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "You need to enter a Steam game id or search by name first.",
+                    });
             return;
         }
 
@@ -62,9 +72,9 @@ $(document).ready(function(){
             showDetails();
 
             if (result.summary) {
-                summary.innerText = `Went through more than ${result.reviews_taken} reviews and got the following summary:\n\n${result.summary}`;
+                summary.value = `Went through more than <b>${result.reviews_taken} reviews</b> and got the following summary:\n\n${result.summary}`;
             } else {
-                summary.innerText = `There is no reviews for ${result.title}. Please try another game.`;
+                summary.value = `There is no reviews for ${result.title}. Please try another game.`;
             }
         }
 

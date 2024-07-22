@@ -1,4 +1,4 @@
-<div id="desktop-menu">
+<div id="desktop-menu" class="desktop-menu">
   <div class="nav-container">
     <img
       src="https://berserkpixel.studio/v2/favicon.png"
@@ -8,7 +8,7 @@
       class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 text-xl"
       >Pixel Analitics</span
     >
-    <nav class="nav">
+    <nav id="nav-desktop" class="nav">
       <ul class="nav--ul__one">
         {% if not loggedin %}
         <a href="{{ url_for('login_route') }}">Login</a>

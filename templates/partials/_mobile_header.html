@@ -1,4 +1,4 @@
-<div id="mobile-menu">
+<div id="mobile-menu" class="mobile-menu">
   <div class="nav-container">
     <img
       src="https://berserkpixel.studio/v2/favicon.png"
@@ -7,7 +7,7 @@
     <span class="title-font font-medium items-center text-gray-900 text-xl"
       >Pixel Analitics</span
     >
-    <nav class="nav">
+    <nav id="nav-mobile" class="nav">
       <ul class="nav--ul__one">
         {% if not loggedin %}
         <a href="{{ url_for('login_route') }}">Login</a>

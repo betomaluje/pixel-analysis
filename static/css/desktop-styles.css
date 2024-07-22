@@ -1,0 +1,45 @@
+.desktop-menu {
+    display: block;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+.summary-text {
+    text-align: left;
+    text-justify: inter-word;
+    width: 50%;
+    margin: 0 auto;
+}
+
+header {
+    background: white;
+    color: black;
+
+    padding: .5rem 0;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#dialog {
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    width: 60%;
+    padding: 16px;
+}

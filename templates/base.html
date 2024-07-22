@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Pixel Analitics</title>
     <link
@@ -13,6 +13,19 @@
 
     <base href="/" />
     <link rel="stylesheet" href="/static/css/styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="/static/css/mobile-styles.css"
+      media="screen and (min-width: 200px) and (max-width: 600px)"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/static/css/desktop-styles.css"
+      media="screen and (min-width: 601px)"
+    />
+
     <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
 
     <link
@@ -28,28 +41,42 @@
       href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.3/themes/smoothness/jquery-ui.css"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.css"
+    />
   </head>
 
   <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <div id="notifications" class="notification">
-      {% for message in messages %} {{ message }} {% endfor %}
+    {% include 'partials/_header.html' %}
+    <div>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <script>
+        console.log("{{ category }}: {{ message }}");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "{{ category }}" == "danger" ? "error" : "{{ category }}",
+          title: "{{ message }}",
+        });
+      </script>
+      {% endfor %} {% endif %} {% endwith %}
     </div>
-    {% endif %} {% endwith %} {% include 'partials/_header.html' %}
     <main class="container mx-auto px-4 mt-8 min-h-screen">
       {% block content %}{% endblock %}
     </main>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var notifications = document.getElementById("notifications");
-
-        if (notifications !== null) {
-          notifications.addEventListener("click", function () {
-            notifications.style.display = "none";
-          });
-        }
-      });
-    </script>
   </body>
 </html>

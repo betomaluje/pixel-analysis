@@ -16,6 +16,7 @@ def update_user_session(user_name):
 async def home_route():
     if request.method == "POST":
         steam_id = request.json.get("steam_id")
+        
         custom_prompt = request.json.get("prompt")
         title = request.json.get("title")
 
@@ -64,9 +65,9 @@ async def login_route():
         user = users_collection.find_one({"username":form.username.data, "password":form.password.data})
         if user:
             update_user_session(user['username'])
-            flash('Logged in successfully.')
+            flash('Logged in successfully.', 'success')
             return redirect(url_for('home_route'))
-        flash('Invalid username or password')
+        flash('Invalid username or password', 'danger')
     return render_template('login.html', title='Sign In', form=form)    
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,7 +80,7 @@ async def register_route():
         existing_user = users_collection.find_one({"username":username})
         existing_email = users_collection.find_one({"email":email})
         if existing_user or existing_email:
-            flash('Username or email already exists. Please choose a different one.')
+            flash('Username or email already exists. Please choose a different one.', 'warning')
             return render_template('register.html', title='Register', form=form)            
         # Add user to MongoDB
         if users_collection is not None:
@@ -89,7 +90,7 @@ async def register_route():
                 'email': email,
                 "paid_user": False
             })            
-        flash('Congratulations, you are now a registered user!')
+        flash('Congratulations, you are now a registered user!', 'success')
         return redirect(url_for('login_route'))        
     return render_template('register.html', title='Register', form=form)
 
@@ -106,12 +107,12 @@ async def account_route():
     elif request.method == 'POST':
         if form.logout.data:              
             session.clear()
-            flash('Successfuly logged out')
+            flash('Successfuly logged out', 'success')
             return redirect(url_for('home_route'))
         elif form.delete.data:
             if (users_collection is not None):
                 users_collection.delete_one({'username': user['username']})
-                flash('Successfuly deleted your account')
+                flash('Successfuly deleted your account', 'success')
                 return redirect(url_for('home_route'))
         elif form.update.data:
             oldPassword = user['password']
@@ -136,6 +137,6 @@ async def account_route():
                         newvalues,
                         upsert=True
                     )                
-            flash('Your changes have been saved.')
+            flash('Your changes have been saved.', 'success')
             return redirect(url_for('home_route'))        
     return render_template('account.html', title='Account', form=form)
