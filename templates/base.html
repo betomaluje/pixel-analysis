@@ -56,7 +56,6 @@
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
       <script>
-        console.log("{{ category }}: {{ message }}");
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

@@ -5,7 +5,7 @@ $(document).ready(function(){
     const summary = document.getElementById('summary');
     const prompt = document.getElementById('prompt');
 
-    hideDetails();
+    hideDetails();   
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -38,7 +38,7 @@ $(document).ready(function(){
             promptInput = prompt.value
         }
         
-        summary.innerText = '';
+        summary.innerHTML = '';
 
         hideDetails();
 
@@ -69,12 +69,12 @@ $(document).ready(function(){
 
             populateAll(steamId, result.title);
 
-            showDetails();
+            showDetails();            
 
             if (result.summary) {
-                summary.value = `Went through more than <b>${result.reviews_taken} reviews</b> and got the following summary:\n\n${result.summary}`;
-            } else {
-                summary.value = `There is no reviews for ${result.title}. Please try another game.`;
+                const newDiv = document.createElement('p');
+                newDiv.innerText = `${result.summary}`;
+                summary.appendChild(newDiv);
             }
         }
 

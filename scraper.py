@@ -63,8 +63,12 @@ async def get_n_reviews(steam_id, n):
         n -= 1
 
         response = get_reviews(str(steam_id), params)
-        
+
+        if response['success'] != 1:
+            return None        
+
         cursor = response['cursor']
+
         for r in response['reviews']:
             if r['review'] and len(r['review']) > review_length_threshold:
                 reviews.append(r['review'])
@@ -83,7 +87,7 @@ async def summarize_reviews(steam_id, title, to_search = 10, custom_prompt = Non
     reviews = await get_n_reviews(steam_id, to_search)
 
     if reviews is None:
-        return f"We are having a problem getting the Steam reviews for {title}. Please try again later."
+        return (0, f"Error: We are having a problem getting the Steam reviews for {title}. Please try again later.")
     
     review_type = "videogame"    
 
@@ -99,7 +103,7 @@ async def summarize_reviews(steam_id, title, to_search = 10, custom_prompt = Non
             },
             {
                 "role": "user",
-                "content": f"Given the next list of reviews for a {review_type} summarize as a bullet point list the main ideas of each, highlighting the best and worst things. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item.\n"
+                "content": f"Given the next list of reviews for a {review_type} summarize as a bullet point list the main ideas of each, highlighting the {amount_for_summary} best and worst things. Each item should not be more than {characters_per_sentence} characters long. Do NOT return the amount of characters per item.\n"
             },
             {
                 "role": "user",
@@ -165,7 +169,7 @@ async def summarize_reviews(steam_id, title, to_search = 10, custom_prompt = Non
         },
         {
             "role": "user",
-            "content": f"Use Plain Text. Desired format: Top X best:\n- -||- \n- -||- \nTop X worst:\n- -||- \n- -||- \n\n"
+            "content": f"Use clear separation between the Top X Best and Top X Worst characteristics. Use html formatting."
         }
     ]
     
@@ -186,9 +190,9 @@ async def summarize_reviews(steam_id, title, to_search = 10, custom_prompt = Non
     except Exception as e:
         print(e)
         if len(total_response) > 0:
-            return (current_reviews, "We can't generate a perfect summary now. Please try again in a minute or so.\nThis is what we gathered so far:\n\n" + total_response[0])
+            return (current_reviews, "Error: We can't generate a perfect summary now. Please try again in a minute or so.\nThis is what we gathered so far:\n\n" + total_response[0])
         else:
-            return (0, "We can't generate a perfect summary now. Please try again in a minute or so.\n")
+            return (0, "Error: We can't generate a perfect summary now. Please try again in a minute or so.\n")
 
 async def get_list_from_openai(openAIClient: AsyncOpenAI, reviews: list, prompt: list):    
    
