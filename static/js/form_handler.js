@@ -61,6 +61,8 @@ $(document).ready(function(){
             body: JSON.stringify({ steam_id: steamId, prompt: promptInput, title: title.value }),
         });
 
+        Swal.close();
+
         if (response.ok) {
             const result = await response.json();
 
@@ -76,9 +78,15 @@ $(document).ready(function(){
                 newDiv.innerText = `${result.summary}`;
                 summary.appendChild(newDiv);
             }
+        } else {
+            console.log(response);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error: ' + response.statusText,
+            });
         }
 
-        Swal.close();
 
         submitButton.disabled = false;
         submitButton.innerHTML = 'Get Report';
