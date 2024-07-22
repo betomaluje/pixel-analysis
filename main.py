@@ -34,4 +34,4 @@ logger = logging.getLogger(__name__)
 from routes import *
 
 if __name__ == "__main__":
-    serve(app, port='8000')
+    serve(app, port='8000', threads=36)
