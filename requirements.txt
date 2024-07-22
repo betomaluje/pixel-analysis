@@ -1,3 +1,4 @@
+gevent
 aiohttp
 beautifulsoup4
 flask-static-compress
