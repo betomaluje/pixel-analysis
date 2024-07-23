@@ -1,14 +1,16 @@
 $(document).ready(function(){
     const form = document.getElementById('steam-form');
-    const submitButton = form.querySelector('button[type="submit"]');
-    const steamIdInput = document.getElementById('steam-id');
-    const summary = document.getElementById('summary');
-    const prompt = document.getElementById('prompt');
 
     hideDetails();   
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        const steamIdInput = document.getElementById('steam-id');
+        const summary = document.getElementById('summary');
+        const prompt = document.getElementById('prompt');
+
         const steamId = steamIdInput.value;
 
         const input = document.getElementById("game-name").value;
@@ -87,7 +89,6 @@ $(document).ready(function(){
             });
         }
 
-
         submitButton.disabled = false;
         submitButton.innerHTML = 'Get Report';
     });    
@@ -139,7 +140,12 @@ function populateAll(steamId, title) {
 
 function populateURL(steamId, gameTitle)  {
     const title = document.querySelector('#title');
-    title.innerHTML = "<a href=\"https://store.steampowered.com/app/"+ steamId + " target=\"_blank\">" + gameTitle + "<i class=\"fa-solid fa-arrow-up-right-from-square fa-2xs\"></i></a>";
+
+    const link = document.createElement('a');
+    link.href = "https://store.steampowered.com/app/"+ steamId;
+    link.target = "_blank";
+    link.innerHTML = gameTitle + " <i class=\"fa-solid fa-arrow-up-right-from-square fa-2xs\"></i>";
+    title.appendChild(link);                
 }
 
 function populate(steamId, elementID, filename)  {
